@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class ButonBeh : MonoBehaviour, IPointerDownHandler
+public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Button But1;
     public bool activated;
@@ -19,14 +19,15 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler
     int arrayP;
     int act;
     int[] active;
-    int allMachnines=12;
+    int allMachnines = 12;
     GameObject Manage;
     public int Id;
     int count = 0;
     int hold = 0;
+    bool inside = false;
     // Start is called before the first frame update
 
-        
+
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -36,11 +37,20 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler
             GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>().selectedID = Id;
             PlayerPrefs.SetInt("RemId", Id);
         }
-        
-        
+
+
 
     }
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        inside = true;
+    }
 
+    //Detect when Cursor leaves the GameObject
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        inside = false;
+    }
 
 
 
@@ -56,7 +66,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler
             {
                 activated = true;
                 But1.GetComponent<Image>().color = new Color(0, 50, 200);
-                
+
             }
             else
             {
@@ -67,28 +77,30 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler
         if (SceneManager.GetActiveScene().name == "SampleScene")
         {
             //act = PlayerPrefs.GetInt("act" + active[count], 0);
-           
+
             active = new int[allMachnines];
-        
-            while ( count < allMachnines){
+
+            while (count < allMachnines)
+            {
 
                 act = PlayerPrefs.GetInt("act" + Id, -1);
 
-               
+
 
                 if (act == 1)
                 {
-                        But1.GetComponent<Image>().color = new Color(0, 50, 200);
-                        active[count] = count;
+                    But1.GetComponent<Image>().color = new Color(0, 50, 200);
+                    active[count] = count;
 
-                        activated = true;
-                    
-                        arrayP = 1;
-                       
+                    activated = true;
 
+                    arrayP = 1;
 
 
-                    }else
+
+
+                }
+                else
                 { arrayP = 0; }
                 count++;
             }
@@ -97,50 +109,53 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler
 
 
     }
-void LateUpdate()
+    void LateUpdate()
     {
-        
+
         TimeInterval += Time.deltaTime;
-        if (TimeInterval > 1)
+        if (TimeInterval >= 1)
         {
             if (activated)
             {
-                
+
                 bar.value += average;
             }
-        if (isPressed)
-        {
-            counter++;
-            if (counter >=1)
+            if (inside)
             {
-
-                    if (activated)
+                if (isPressed)
+                {
+                    counter++;
+                    if (counter > 1.5)
                     {
-                        PPref = 1;
+
+                        if (activated)
+                        {
+                            PPref = 1;
+
+                        }
+                        else
+                        {
+                            PPref = 0;
+
+                        }
+
+                        PlayerPrefs.SetInt("ifactivated", arrayP);
+                        if (SceneManager.GetActiveScene().name == "SampleScene")
+                            SceneManager.LoadScene("DeviceSettings");
+
 
                     }
-                    else
-                    {
-                        PPref = 0;
-
-                    }
-                    
-                   PlayerPrefs.SetInt("ifactivated", arrayP);
-                    if (SceneManager.GetActiveScene().name == "SampleScene")
-                        SceneManager.LoadScene("DeviceSettings");
-                   
-
                 }
-        }
+            }
             TimeInterval = 0;
-          
+
         }
     }
     public void Clicked()
     {
         isPressed = false;
         TimeInterval = 0;
-      
+
 
         if (activated)
         {
@@ -151,15 +166,15 @@ void LateUpdate()
         }
         else
         {
-            But1.GetComponent<Image>().color = new Color(0,50,200);
+            But1.GetComponent<Image>().color = new Color(0, 50, 200);
             arrayP = 1;
             activated = true;
             PlayerPrefs.SetInt("act" + Id, 1);
         }
-    
 
-       
-     
+
+
+
         if (SceneManager.GetActiveScene().name == "DeviceSettings")
         {
 

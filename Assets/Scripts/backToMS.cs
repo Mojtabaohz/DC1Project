@@ -7,10 +7,15 @@ using UnityEngine.EventSystems;
 
 public class backToMS : MonoBehaviour
 {
-    
+    public Slider bar;
 
+    void Start()
+    {
+       
+    }
     public void Clicked()
     {
+        PlayerPrefs.SetFloat("Slid", bar.value);
         SceneManager.LoadScene("SampleScene");
     }
 }

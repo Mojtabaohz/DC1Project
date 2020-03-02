@@ -29,6 +29,10 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 
 
+        void OnDestroy()
+    {
+        PlayerPrefs.SetFloat("Slid", bar.value);
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         isPressed = true;
@@ -57,11 +61,13 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     // Update is called once per frame
     void Start()
     {
-
+        
         if (SceneManager.GetActiveScene().name == "DeviceSettings")
         {
-
+            bar=GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
+            bar.value = PlayerPrefs.GetFloat("Slid", 0);
             arrayP = PlayerPrefs.GetInt("ifactivated", 0);
+
             if (arrayP == 1)
             {
                 activated = true;
@@ -77,6 +83,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         if (SceneManager.GetActiveScene().name == "SampleScene")
         {
             //act = PlayerPrefs.GetInt("act" + active[count], 0);
+            bar.value = PlayerPrefs.GetFloat("Slid", 0);
 
             active = new int[allMachnines];
 
@@ -118,7 +125,8 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             if (activated)
             {
 
-                bar.value += average;
+                bar.value += average/60.0f;
+              
             }
             if (inside)
             {
@@ -141,6 +149,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                         PlayerPrefs.SetInt("ifactivated", arrayP);
                         if (SceneManager.GetActiveScene().name == "SampleScene")
+                            PlayerPrefs.SetFloat("Slid", bar.value);
                             SceneManager.LoadScene("DeviceSettings");
 
 

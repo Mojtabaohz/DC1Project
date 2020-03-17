@@ -25,12 +25,22 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     int count = 0;
     int hold = 0;
     bool inside = false;
+    string  CurTime;
+    string CurTime1;
+    string CurTime2;
+    string CurTime3;
+    int timeSpend;
+    string isAM;
+    int placeholder;
     // Start is called before the first frame update
 
 
 
-        void OnDestroy()
+    void OnDestroy()
     {
+        PlayerPrefs.SetInt("PrevTime", int.Parse(CurTime) + placeholder * 3600 + int.Parse(CurTime2)*60);
+        Debug.Log("PlayerPrefs.GetInt()");
+        PlayerPrefs.SetInt("Cur3P", int.Parse(CurTime3));
         PlayerPrefs.SetFloat("Slid", bar.value);
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -61,8 +71,33 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     // Update is called once per frame
     void Start()
     {
+        CurTime = System.DateTime.Now.ToString("ss");
+        CurTime1 = System.DateTime.Now.ToString("hh");
+        CurTime2 = System.DateTime.Now.ToString("mm");
+        CurTime3 = System.DateTime.Now.ToString("dd");
+        isAM= System.DateTime.Now.ToString("tt");
         
-        if (SceneManager.GetActiveScene().name == "DeviceSettings")
+        Debug.Log(CurTime);
+       
+        Debug.Log(CurTime2);
+        int.Parse(CurTime3);
+        //  Debug.Log(int.Parse(CurTime) + int.Parse(CurTime1) + int.Parse(CurTime2));
+        int.Parse(CurTime);
+        int.Parse(CurTime1);
+        int.Parse(CurTime2);
+        if (isAM == "pm")
+        {
+            placeholder = int.Parse(CurTime1);
+           placeholder += 12;
+
+        }
+        Debug.Log(placeholder);
+
+        timeSpend = (int.Parse(CurTime) + placeholder *3600 + int.Parse(CurTime2) *60)-PlayerPrefs.GetInt("PrevTime", 0) + ((int.Parse(CurTime3) -PlayerPrefs.GetInt("Cur3P", 0)) * 86400);
+
+
+        Debug.Log(timeSpend);
+        if (SceneManager.GetActiveScene().name == "DeviceSettings") 
         {
             bar=GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
             bar.value = PlayerPrefs.GetFloat("Slid", 0);

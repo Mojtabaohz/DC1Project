@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\backToMS.cs" />
      <Compile Include="Assets\Scripts\ButonBeh.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\ShowBackground.cs" />
      <Compile Include="Assets\Scripts\TemporaryScript.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/User/Documents/GitHub/DC1Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

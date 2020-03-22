@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ShowBackground : MonoBehaviour
 {
+    bool popped = false;
     public Slider bar1;
     public SpriteRenderer spriteRenderer;
-  
+ public GameObject popups;
+
     int limit;
     int nextlimit;
     // Start is called before the first frame update
@@ -40,7 +42,21 @@ public class ShowBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+      
+        if (bar1.value >= 1000)
+        {
+            if (popped == false)
+            {
+                popups.SetActive(true);
+                popped = true;
+            }
+        }
+
+        else
+        {
+            popped = false;
+            popups.SetActive(false);
+        }
         if (bar1.value > limit && bar1.value < nextlimit)
         {
             this.spriteRenderer.enabled = true;

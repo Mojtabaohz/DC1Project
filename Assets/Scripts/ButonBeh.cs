@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
+ 
     public Button But1;
     public bool activated;
     public Slider bar;
@@ -32,16 +33,25 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     int timeSpend;
     string isAM;
     int placeholder;
+ 
     // Start is called before the first frame update
 
 
 
     void OnDestroy()
     {
+        CurTime = System.DateTime.Now.ToString("ss");
+        CurTime1 = System.DateTime.Now.ToString("hh");
+        CurTime2 = System.DateTime.Now.ToString("mm");
+        CurTime3 = System.DateTime.Now.ToString("dd");
+        
         PlayerPrefs.SetInt("PrevTime", int.Parse(CurTime) + placeholder * 3600 + int.Parse(CurTime2)*60);
-        Debug.Log("PlayerPrefs.GetInt()");
+      // Debug.Log("ssb"+int.Parse(CurTime));
+      // Debug.Log("hhb"+placeholder);
+       // Debug.Log("mmb"+int.Parse(CurTime2));
         PlayerPrefs.SetInt("Cur3P", int.Parse(CurTime3));
         PlayerPrefs.SetFloat("Slid", bar.value);
+
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -69,34 +79,42 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 
     // Update is called once per frame
+    void Update()
+    {
+       
+    }
     void Start()
     {
+     //   Debug.Log("that"+ PlayerPrefs.GetInt("PrevTime", 0));
         CurTime = System.DateTime.Now.ToString("ss");
         CurTime1 = System.DateTime.Now.ToString("hh");
         CurTime2 = System.DateTime.Now.ToString("mm");
         CurTime3 = System.DateTime.Now.ToString("dd");
         isAM= System.DateTime.Now.ToString("tt");
         
-        Debug.Log(CurTime);
+      //  Debug.Log("this"+CurTime);
        
-        Debug.Log(CurTime2);
+    //    Debug.Log(CurTime2);
         int.Parse(CurTime3);
         //  Debug.Log(int.Parse(CurTime) + int.Parse(CurTime1) + int.Parse(CurTime2));
         int.Parse(CurTime);
         int.Parse(CurTime1);
         int.Parse(CurTime2);
+        placeholder = int.Parse(CurTime1);
         if (isAM == "pm")
         {
-            placeholder = int.Parse(CurTime1);
+            
            placeholder += 12;
 
         }
-        Debug.Log(placeholder);
+        //Debug.Log(placeholder);
 
         timeSpend = (int.Parse(CurTime) + placeholder *3600 + int.Parse(CurTime2) *60)-PlayerPrefs.GetInt("PrevTime", 0) + ((int.Parse(CurTime3) -PlayerPrefs.GetInt("Cur3P", 0)) * 86400);
-
-
-        Debug.Log(timeSpend);
+      //  Debug.Log("nowhh" + placeholder);
+      //  Debug.Log("nowmm" + int.Parse(CurTime2));
+       // Debug.Log("nowss" + int.Parse(CurTime));
+       // Debug.Log("Beftime" + PlayerPrefs.GetInt("PrevTime", 0));
+       //Debug.Log("timespend"+timeSpend);
         if (SceneManager.GetActiveScene().name == "DeviceSettings") 
         {
             bar=GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
@@ -119,7 +137,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         {
             //act = PlayerPrefs.GetInt("act" + active[count], 0);
             bar.value = PlayerPrefs.GetFloat("Slid", 0);
-
+           
             active = new int[allMachnines];
 
             while (count < allMachnines)
@@ -137,7 +155,8 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     activated = true;
 
                     arrayP = 1;
-
+                    //not tested VVV
+                    bar.value += timeSpend * 60;
 
 
 
@@ -161,7 +180,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             {
 
                 bar.value += average/60.0f;
-              
+               
             }
             if (inside)
             {

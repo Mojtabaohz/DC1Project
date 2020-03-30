@@ -14,6 +14,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     bool isPressed = false;
     int counter;
     float TimeInterval;
+    float timeToday;
     public int average;
     int IDs;
     int PPref;
@@ -33,6 +34,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     int timeSpend;
     string isAM;
     int placeholder;
+    int today;
  
     // Start is called before the first frame update
 
@@ -85,7 +87,12 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
     void Start()
     {
-     //   Debug.Log("that"+ PlayerPrefs.GetInt("PrevTime", 0));
+        if (SceneManager.GetActiveScene().name == "DeviceSettings")
+        {
+            average= PlayerPrefs.GetInt("Average", 50);
+            Id = PlayerPrefs.GetInt("RemId", 50);
+        }
+        //   Debug.Log("that"+ PlayerPrefs.GetInt("PrevTime", 0));
         CurTime = System.DateTime.Now.ToString("ss");
         CurTime1 = System.DateTime.Now.ToString("hh");
         CurTime2 = System.DateTime.Now.ToString("mm");
@@ -109,7 +116,23 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
         //Debug.Log(placeholder);
 
-        timeSpend = (int.Parse(CurTime) + placeholder *3600 + int.Parse(CurTime2) *60)-PlayerPrefs.GetInt("PrevTime", 0) + ((int.Parse(CurTime3) -PlayerPrefs.GetInt("Cur3P", 0)) * 86400);
+        timeSpend = (int.Parse(CurTime) + placeholder *3600 + int.Parse(CurTime2) *60)-PlayerPrefs.GetInt("PrevTime", 0);
+        today = int.Parse(CurTime3) - PlayerPrefs.GetInt("Cur3P", 0);
+        if (today > 1)
+        {
+            timeSpend += (int.Parse(CurTime3) - PlayerPrefs.GetInt("Cur3P", 0)-1) * 86400;
+        }
+        if (today == 1) {
+            timeToday = timeSpend-(int.Parse(CurTime) + placeholder * 3600 + int.Parse(CurTime2) * 60);
+            Debug.Log(timeToday);
+            if (today >= 10000)
+            {
+
+            }else
+            {
+
+            }
+        }
       //  Debug.Log("nowhh" + placeholder);
       //  Debug.Log("nowmm" + int.Parse(CurTime2));
        // Debug.Log("nowss" + int.Parse(CurTime));
@@ -203,9 +226,11 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                         PlayerPrefs.SetInt("ifactivated", arrayP);
                         if (SceneManager.GetActiveScene().name == "SampleScene")
+                        {
+                            PlayerPrefs.SetInt("Average", average);
                             PlayerPrefs.SetFloat("Slid", bar.value);
                             SceneManager.LoadScene("DeviceSettings");
-
+                        }
 
                     }
                 }
@@ -238,10 +263,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 
 
-        if (SceneManager.GetActiveScene().name == "DeviceSettings")
-        {
-
-        }
+        
     }
 
 }

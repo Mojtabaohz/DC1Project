@@ -19,8 +19,14 @@ public class GameManager : MonoBehaviour
     if (SceneManager.GetActiveScene().name == "DeviceSettings")
         {
             selectedID = PlayerPrefs.GetInt("RemId", 0);
-
-            prefabs = Instantiate(Resources.Load<GameObject>("Prefabs/" + selectedID));
+            if (selectedID < 12)
+            {
+                prefabs = Instantiate(Resources.Load<GameObject>("Prefabs/" + selectedID));
+            }
+            else
+            {
+                prefabs = Instantiate(Resources.Load<GameObject>("Prefabs/personalMachine(original)"));
+            }
             prefabs.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
 
         

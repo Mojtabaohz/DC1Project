@@ -23,16 +23,17 @@ public class ShowBackground : MonoBehaviour
 
                 break;
             case "2":limit = 1000;
-                nextlimit = 2000;
-                break;
-            case "3": limit = 2000;
-                nextlimit = 3000;
-                break;
-            case "4": limit = 3000;
+                nextlimit = 4000;
                 nextlimit = 4000;
                 break;
-            case "5": limit = 4000;
-                nextlimit = 50000;
+            case "3": limit = 4000;
+                nextlimit = 7000;
+                break;
+            case "4": limit = 7000;
+                nextlimit = 10000;
+                break;
+            case "5": limit = 10000;
+                nextlimit = 1000000;
                 break;
                
         } 
@@ -43,7 +44,7 @@ public class ShowBackground : MonoBehaviour
     void Update()
     {
       
-        if (bar1.value >= 1000)
+        if (bar1.value >= 10000)
         {
             if (popped == false)
             {
@@ -57,7 +58,7 @@ public class ShowBackground : MonoBehaviour
             popped = false;
             popups.SetActive(false);
         }
-        if (bar1.value > limit && bar1.value < nextlimit)
+        if (bar1.value >= limit && bar1.value < nextlimit)
         {
             this.spriteRenderer.enabled = true;
 

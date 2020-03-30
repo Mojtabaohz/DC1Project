@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeviceSettings.unity
     guid: dde80c7e509c06d48ace99dc8fe55829
+  - enabled: 1
+    path: Assets/Scenes/goals.unity
+    guid: 0ac0a38efdb81b44daab39344cc93991
   m_configObjects: {}

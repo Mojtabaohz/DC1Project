@@ -184,12 +184,12 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             if (arrayP == 1)
             {
                 activated = true;
-                But1.GetComponent<Image>().color = new Color(0, 50, 200);
-
+                But1.GetComponent<Image>().color = new Color(0, 50, 0, 0.2f);
+                Debug.Log("hi");
             }
             else
             {
-
+                But1.GetComponent<Image>().color = new Color(0, 50, 200, 0.2f);
                 activated = false;
             }
         }
@@ -209,7 +209,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                 if (act == 1)
                 {
-                    But1.GetComponent<Image>().color = new Color(0, 50, 200);
+                    But1.GetComponent<Image>().color = new Color(0, 0, 200,0.2f);
                     active[count] = count;
 
                     activated = true;
@@ -284,14 +284,14 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
         if (activated)
         {
-            But1.GetComponent<Image>().color = Color.white;
+            But1.GetComponent<Image>().color = new Color(256, 256, 256, 0.2f);
             arrayP = 0;
             activated = false;
             PlayerPrefs.SetInt("act" + Id, 0);
         }
         else
         {
-            But1.GetComponent<Image>().color = new Color(0, 50, 200);
+            But1.GetComponent<Image>().color = new Color(0, 0, 200, 0.2f);
             arrayP = 1;
             activated = true;
             PlayerPrefs.SetInt("act" + Id, 1);

@@ -35,7 +35,8 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     string isAM;
     int placeholder;
     int today;
- 
+    int daycounter=1;
+    public GameObject fridge;
     // Start is called before the first frame update
 
 
@@ -87,6 +88,8 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
     void Start()
     {
+       
+
         if (SceneManager.GetActiveScene().name == "DeviceSettings")
         {
             average= PlayerPrefs.GetInt("Average", 50);
@@ -115,22 +118,56 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
         }
         //Debug.Log(placeholder);
-
+        
         timeSpend = (int.Parse(CurTime) + placeholder *3600 + int.Parse(CurTime2) *60)-PlayerPrefs.GetInt("PrevTime", 0);
         today = int.Parse(CurTime3) - PlayerPrefs.GetInt("Cur3P", 0);
         if (today > 1)
         {
             timeSpend += (int.Parse(CurTime3) - PlayerPrefs.GetInt("Cur3P", 0)-1) * 86400;
         }
+
         if (today == 1) {
             timeToday = timeSpend-(int.Parse(CurTime) + placeholder * 3600 + int.Parse(CurTime2) * 60);
-            Debug.Log(timeToday);
-            if (today >= 10000)
+            if (gameObject.name == "FridgeB")
             {
+                if (bar.value >= 10000)
+                {
+                    daycounter = PlayerPrefs.GetInt("daycounter", 1);
+                    PlayerPrefs.SetInt("negative" + daycounter, 1);
+                    daycounter++;
 
-            }else
-            {
+                    if (daycounter >= 31)
+                    {
+                        daycounter = 1;
+                        for (int i = 0; i <= 30; i++)
+                        {
+                            PlayerPrefs.SetInt("possitive" + i, 0);
+                            PlayerPrefs.SetInt("negative" + i, 0);
 
+                        }
+                    }
+                    PlayerPrefs.SetInt("daycounter", daycounter);
+                    Debug.Log("hi");
+                }
+                else
+                {
+                    daycounter = PlayerPrefs.GetInt("daycounter", 1);
+                    PlayerPrefs.SetInt("possitive" + daycounter, 1);
+                    daycounter++;
+
+                    if (daycounter >= 31)
+                    {
+                        daycounter = 1;
+                        for (int i = 0; i <= 30; i++)
+                        {
+                            PlayerPrefs.SetInt("possitive" + i, 0);
+                            PlayerPrefs.SetInt("negative" + i, 0);
+
+                        }
+                    }
+                    PlayerPrefs.SetInt("daycounter", daycounter);
+                    Debug.Log(daycounter);
+                }
             }
         }
       //  Debug.Log("nowhh" + placeholder);

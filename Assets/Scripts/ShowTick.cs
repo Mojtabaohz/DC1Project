@@ -6,28 +6,39 @@ public class ShowTick : MonoBehaviour
 {
     bool passed;
     public int IdDay;
-
+    int count = 0;
+    int holder;
+    string Day;
     // Start is called before the first frame update
     void Start()
     {
 
 
-        for (int i = 0; i < 30; i++)
-        {
-            if ((PlayerPrefs.GetInt("possitive" + i, 0)) == 1)
-            {
-                gameObject.SetActive(true);
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
-        }
+        show();
+
+
+
+
     }
     void show()
     {
 
-        gameObject.SetActive(true);
-        PlayerPrefs.SetInt("possitive" + IdDay, 1);
+        holder = PlayerPrefs.GetInt("possitive" + IdDay, 0);
+
+        if (holder == 1)
+        {
+
+
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+        if(PlayerPrefs.GetInt("possitive30", 0) == 1)
+        {
+            PlayerPrefs.SetInt("possitive" + IdDay, 0);
+
+        }
     }
 }

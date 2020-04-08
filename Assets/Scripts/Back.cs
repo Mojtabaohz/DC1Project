@@ -7,9 +7,10 @@ using UnityEngine.EventSystems;
 
 public class Back : MonoBehaviour
 {
+
     public void Clicked()
     {
-
+       
         SceneManager.LoadScene("SampleScene");
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Canvas
   - Slider
   - pop
+  - usage_time
   layers:
   - Default
   - TransparentFX

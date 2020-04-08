@@ -21,9 +21,11 @@ public class timerSetting : MonoBehaviour
 	public int minAvg = 10;
 	public int average;
 	public float usageTime ;
+    public int Id;
+    public GameObject stat;
 	void Start () {
-
-		Button inc_btn = incButton.GetComponent<Button>();
+        Id = PlayerPrefs.GetInt("RemId", 50);
+        Button inc_btn = incButton.GetComponent<Button>();
 		Button dec_btn = decButton.GetComponent<Button>();
 		Button app_btn = applyButton.GetComponent<Button>();
 		inc_btn.onClick.AddListener(IncTimer);
@@ -63,7 +65,7 @@ public class timerSetting : MonoBehaviour
 		txt.text = usageTime.ToString();
 	}
 	void AppTimer(){
-		//Debug.Log ("You have clicked the app button!");
+		Debug.Log ("You have clicked the app button!");
         bar.value = PlayerPrefs.GetFloat("Slid", 0);
 		bar.value += (average/60.0f)*usageTime;
 		PlayerPrefs.SetFloat("Slid", bar.value);
@@ -73,15 +75,22 @@ public class timerSetting : MonoBehaviour
 		Text avg_txt = avgText.GetComponent<Text>();
 		average = int.Parse(avg_txt.text) + minAvg;
 		avg_txt.text = average.ToString();
-	}
+        Debug.Log("You have clicked the apply avg button!");
+    }
 	void DecAvg(){
 		Text avg_txt = avgText.GetComponent<Text>();
 		average = int.Parse(avg_txt.text) - minAvg;
 		avg_txt.text = average.ToString();
 	}
-	void AppAvg(){
-		Debug.Log ("You have clicked the apply avg button!");
-		PlayerPrefs.SetInt("Average", average);
+	public void AppAvg(){
+        Text avg_txt = avgText.GetComponent<Text>();
+        average = int.Parse(avg_txt.text);
+        
+        PlayerPrefs.SetInt("Average" + Id, average);
+       
+        Debug.Log("that" + average);
+
+        PlayerPrefs.SetInt("Average", average);
 	}
 
 }

@@ -55,6 +55,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         PlayerPrefs.SetInt("Cur3P", int.Parse(CurTime3));
         PlayerPrefs.SetFloat("Slid", bar.value);
 
+       
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -86,23 +87,26 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     {
        
     }
+  
     void Start()
     {
-       
 
+        
         if (SceneManager.GetActiveScene().name == "DeviceSettings")
         {
-            average= PlayerPrefs.GetInt("Average", 50);
+
             Id = PlayerPrefs.GetInt("RemId", 50);
+          
         }
-        //   Debug.Log("that"+ PlayerPrefs.GetInt("PrevTime", 0));
+        average = PlayerPrefs.GetInt("Average" + Id, 80);
+        Debug.Log("thas" + average);
         CurTime = System.DateTime.Now.ToString("ss");
         CurTime1 = System.DateTime.Now.ToString("hh");
         CurTime2 = System.DateTime.Now.ToString("mm");
         CurTime3 = System.DateTime.Now.ToString("dd");
         isAM= System.DateTime.Now.ToString("tt");
         
-      //  Debug.Log("this"+CurTime);
+      //  
        
     //    Debug.Log(CurTime2);
         int.Parse(CurTime3);

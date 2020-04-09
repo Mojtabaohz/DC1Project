@@ -85,11 +85,8 @@ public class timerSetting : MonoBehaviour
 	public void AppAvg(){
         Text avg_txt = avgText.GetComponent<Text>();
         average = int.Parse(avg_txt.text);
-        
         PlayerPrefs.SetInt("Average" + Id, average);
-       
         Debug.Log("that" + average);
-
         PlayerPrefs.SetInt("Average", average);
 	}
 

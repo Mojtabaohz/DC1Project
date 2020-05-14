@@ -21,6 +21,6 @@ public class Copy : MonoBehaviour
 
     
         text1 = slider.value.ToString("#");
-        text.text= text1+"kw";
+        text.text= text1+"kWh";
     }
 }

@@ -38,7 +38,7 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     int daycounter=1;
     public GameObject fridge;
     // Start is called before the first frame update
-
+    public int daysInARow;
 
 
     void OnDestroy()
@@ -90,16 +90,17 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
   
     void Start()
     {
+        PlayerPrefs.SetInt("Number2", 0);
 
-        
         if (SceneManager.GetActiveScene().name == "DeviceSettings")
         {
 
             Id = PlayerPrefs.GetInt("RemId", 50);
           
         }
+        daysInARow = PlayerPrefs.GetInt("Days", 0);
         average = PlayerPrefs.GetInt("Average" + Id, 80);
-        Debug.Log("thas" + average);
+
         CurTime = System.DateTime.Now.ToString("ss");
         CurTime1 = System.DateTime.Now.ToString("hh");
         CurTime2 = System.DateTime.Now.ToString("mm");
@@ -125,15 +126,35 @@ public class ButonBeh : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         
         timeSpend = (int.Parse(CurTime) + placeholder *3600 + int.Parse(CurTime2) *60)-PlayerPrefs.GetInt("PrevTime", 0);
         today = int.Parse(CurTime3) - PlayerPrefs.GetInt("Cur3P", 0);
+        
         if (today > 1)
         {
             timeSpend += (int.Parse(CurTime3) - PlayerPrefs.GetInt("Cur3P", 0)-1) * 86400;
+            PlayerPrefs.SetInt("Days", 0);
         }
 
         if (today == 1) {
-            timeToday = timeSpend-(int.Parse(CurTime) + placeholder * 3600 + int.Parse(CurTime2) * 60);
+            
+              
+          
+           
+
             if (gameObject.name == "FridgeB")
             {
+                daysInARow++;
+                PlayerPrefs.SetInt("Days", daysInARow);
+                timeToday = timeSpend - (int.Parse(CurTime) + placeholder * 3600 + int.Parse(CurTime2) * 60);
+                if (daysInARow == 7)
+                {
+                    PlayerPrefs.SetInt("Number3", 1);
+                    PlayerPrefs.SetInt("Days", 0);
+                }
+                if (bar.value <= 5000)
+                {
+
+                    PlayerPrefs.SetInt("Number1", 1);
+                }
+
                 if (bar.value >= 10000)
                 {
                     daycounter = PlayerPrefs.GetInt("daycounter", 1);
